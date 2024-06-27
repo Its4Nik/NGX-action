@@ -39,7 +39,7 @@ for current_image in "${IMAGES_TO_MAKE[@]}"; do
     
     # Construct build context and image name
     BUILD_CONTEXT="./${current_image%/}"
-    IMAGE_NAME="$(echo "ghcr.io/${GITHUB_OWNER}/${IMAGE_ID}:${DOCKER_IMAGE_TAG}" | tr '[a-z]')"
+    IMAGE_NAME="$(echo "ghcr.io/${GITHUB_OWNER,,}/${IMAGE_ID,,}:${DOCKER_IMAGE_TAG,,}")"
 
     echo -e "Image: ${IMAGE_NAME} \nBuild context: ${BUILD_CONTEXT} \nDockerfile: ${DOCKERFILE_PATH}"
     
@@ -55,7 +55,7 @@ for current_image in "${IMAGES_TO_MAKE[@]}"; do
     echo "Build arguments: ${BUILD_ARGS}"
     
     # Build the Docker image
-    docker build ${BUILD_CONTEXT} -t ${IMAGE_ID}:${DOCKER_IMAGE_TAG} ${BUILD_ARGS}
+    docker build ${BUILD_CONTEXT,,} -t ghcr.io/${GITHUB_OWNER,,}/${IMAGE_ID,,}:${DOCKER_IMAGE_TAG,,} ${BUILD_ARGS,,}
     if [ $? -ne 0 ]; then
         echo "Docker build failed for ${IMAGE_NAME}"
         exit 1
