@@ -1,4 +1,4 @@
-name: 'Github Container Registry: Build and push Docker image'
+name: 'GHCR Push: Build and push Docker image'
 description: 'Github Action that builds and pushes a docker image to Github Container Registry.'
 inputs:
   github-push-secret:
