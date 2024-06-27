@@ -34,12 +34,11 @@ echo "Images to be built: ${IMAGES_TO_MAKE[@]}"
 # Iterate over each directory to build and optionally push Docker images
 for current_image in "${IMAGES_TO_MAKE[@]}"; do
     echo "Processing directory: ${current_image}"
-    DOCKERFILE_PATH="${current_image}"
     # Normalize the image ID
     IMAGE_ID="$(echo ${current_image%/} | tr '[a-z]')"
     
     # Construct build context and image name
-    BUILD_CONTEXT="Dockerfile-${current_image%/}"
+    BUILD_CONTEXT="${current_image%/}/Dockerfile"
     IMAGE_NAME=ghcr.io/${GITHUB_OWNER}/${IMAGE_ID}:${DOCKER_IMAGE_TAG}
     
     echo -e "Image: ${IMAGE_NAME} \nBuild context: ${BUILD_CONTEXT} \nDockerfile: ${DOCKERFILE_PATH}"
@@ -56,7 +55,7 @@ for current_image in "${IMAGES_TO_MAKE[@]}"; do
     echo "Build arguments: ${BUILD_ARGS}"
     
     # Build the Docker image
-    docker build ${BUILD_CONTEXT} -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} ${BUILD_ARGS}
+    docker build ${BUILD_CONTEXT} -t ${IMAGE_NAME}
     if [ $? -ne 0 ]; then
         echo "Docker build failed for ${IMAGE_NAME}"
         exit 1
