@@ -1,0 +1,43 @@
+name: 'Github Container Registry: Build and push Docker image'
+description: 'Github Action that builds and pushes a docker image to Github Container Registry.'
+inputs:
+  github-push-secret:
+    description: 'Token such as GITHUB_TOKEN that has `write:packages` scope to authenticate against GCHR.'
+    required: true
+  docker-image-name:
+    description: 'Docker Image name'
+    required: true
+  docker-image-tag:
+    description: 'Docker Image tag'
+    default: 'latest'
+    required: false
+  dockerfile-path:
+    description: 'Dockerfile path and name'
+    default: "Dockerfile"
+    required: false
+  build-context:
+    description: 'Path to the build context'
+    default: "."
+    required: false
+  build-only:
+    description: "If 'true', skip pushing the image"
+    default: "false"
+    required: false
+  docker-build-args:
+    description: "Comma-separated list of build arguments. Must be of the format KEY=VALUE,KEY=VALUE"
+    default: ""
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.github-push-secret }}
+    - ${{ inputs.docker-image-name }}
+    - ${{ inputs.docker-image-tag }}
+    - ${{ inputs.dockerfile-path }}
+    - ${{ inputs.build-context}}
+    - ${{ inputs.build-only }}
+    - ${{ inputs.docker-build-args }}
+branding:
+  icon: 'box'
+  color: 'blue'
