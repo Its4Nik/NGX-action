@@ -39,7 +39,7 @@ for current_image in "${IMAGES_TO_MAKE[@]}"; do
     
     # Construct build context and image name
     BUILD_CONTEXT="./${current_image%/}"
-    IMAGE_NAME=ghcr.io/${GITHUB_OWNER}/${IMAGE_ID}:${DOCKER_IMAGE_TAG}
+    IMAGE_NAME="$(echo "ghcr.io/${GITHUB_OWNER}/${IMAGE_ID}:${DOCKER_IMAGE_TAG}" | tr '[a-z]')"
 
     echo -e "Image: ${IMAGE_NAME} \nBuild context: ${BUILD_CONTEXT} \nDockerfile: ${DOCKERFILE_PATH}"
     
