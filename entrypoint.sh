@@ -68,7 +68,7 @@ for current_image in "${IMAGES_TO_MAKE[@]}"; do
         echo "Skipping push for ${IMAGE_NAME}"
     else
         echo "Pushing Docker image: ${IMAGE_NAME}"
-        docker push ${IMAGE_NAME}
+        docker push ${IMAGE_NAME,,}
         if [ $? -ne 0 ]; then
             echo "Docker push failed for ${IMAGE_NAME}"
             exit 1
