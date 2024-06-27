@@ -34,7 +34,7 @@ echo "Images to be built: ${IMAGES_TO_MAKE[@]}"
 # Iterate over each directory to build and optionally push Docker images
 for current_image in "${IMAGES_TO_MAKE[@]}"; do
     echo "Processing directory: ${current_image}"
-    
+    DOCKERFILE_PATH="${current_image}"
     # Normalize the image ID
     IMAGE_ID="$(echo ${current_image%/} | tr '[A-Z]' '[a-z]')"
     
