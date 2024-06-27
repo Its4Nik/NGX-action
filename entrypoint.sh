@@ -36,13 +36,13 @@ for current_image in "${IMAGES_TO_MAKE[@]}"; do
     echo "Processing directory: ${current_image}"
     DOCKERFILE_PATH="${current_image}"
     # Normalize the image ID
-    IMAGE_ID="$(echo ${current_image%/} | tr '[A-Z]' '[a-z]')"
+    IMAGE_ID="$(echo ${current_image%/} | tr '[a-z]')"
     
     # Construct build context and image name
     BUILD_CONTEXT="Dockerfile-${current_image%/}"
     IMAGE_NAME=ghcr.io/${GITHUB_OWNER}/${IMAGE_ID}:${DOCKER_IMAGE_TAG}
     
-    echo "Building Docker image: ${IMAGE_NAME} with build context: ${BUILD_CONTEXT} and Dockerfile: ${DOCKERFILE_PATH}"
+    echo -e "Image: ${IMAGE_NAME} \nBuild context: ${BUILD_CONTEXT} \nDockerfile: ${DOCKERFILE_PATH}"
     
     # Process build arguments
     IFS=',' read -a items <<< "$DOCKER_BUILD_ARGS"
